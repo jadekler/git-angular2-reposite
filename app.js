@@ -10,10 +10,15 @@ if (typeof __decorate !== "function") __decorate = function (decorators, target,
 if (typeof __metadata !== "function") __metadata = function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+if (typeof __param !== "function") __param = function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var angular2_1 = require('angular2/angular2');
-// Annotation section
 var MyAppComponent = (function () {
-    function MyAppComponent() {
+    function MyAppComponent(http) {
+        this.http = http;
+        var res = this.http.get('https://api.github.com/users/jadekler/repos').map(function (res) { return res.json(); });
+        console.log(res);
         this.name = 'Alice';
     }
     MyAppComponent = __decorate([
@@ -22,8 +27,9 @@ var MyAppComponent = (function () {
         }),
         angular2_1.View({
             template: '<h1>Hello {{ name }}</h1>'
-        }), 
-        __metadata('design:paramtypes', [])
+        }),
+        __param(0, angular2_1.Inject(angular2_1.Http)), 
+        __metadata('design:paramtypes', [Object])
     ], MyAppComponent);
     return MyAppComponent;
 })();
